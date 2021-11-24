@@ -1,0 +1,21 @@
+---
+- name: play1
+  hosts: cloud
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install package 
+      package:
+          name: "{{item}}"
+          state: present
+      when: ansible_distribution=="CentOS" or ansible_distribution=="Amazon"
+      loop:
+        - ntp
+        - httpd
+    - name: Install packages on Ubuntu
+      apt:
+        name: "{{item}}"
+        state: present
+      when: ansible_distribution=="Ubuntu"
+      loop: 
+        - apache2

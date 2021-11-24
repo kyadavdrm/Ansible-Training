@@ -1,0 +1,13 @@
+---
+- name: play1
+  hosts: host02
+  tasks:
+    - name: install ntp
+      package:
+        name: ntp
+        state: installed
+      ignore_errors: true
+      register: ntp_out
+    - name: print the output
+      debug: var=ntp_out
+      when: ntp_out.rc != 0

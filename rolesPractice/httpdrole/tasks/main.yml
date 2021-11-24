@@ -1,0 +1,7 @@
+---
+# tasks file for httpdrole
+
+- name: Install the HTTPD package
+  package:
+     name: httpd
+     state: installed

@@ -1,0 +1,28 @@
+---
+- name: Play for Cloud servers
+  hosts: cloud
+  gather_facts: True
+  tasks:
+    - name: creating user on OS type {{ ansible_distribution }}
+      user: 
+        name: user3
+        state: present
+      register: user_out
+    - name: Ignore Errors
+      command: ls-l
+      ignore_errors: yes
+    - name: Printing the os versions
+      debug: msg=" Host {{ ansible_hostname }} is having OS Version {{ansible_distribution}}"
+    - name: print user details
+      debug: 
+        var: user_out.changed
+    - name: Install the Apache package using condition
+      yum:
+         name: httpd
+         state: installed
+      when: ansible_distribution=="CentOS" or ansible_distribution=="Amazon"
+    - name: Install the Apache2 on ubuntu machine
+      apt:
+         name: apache2
+         state: present
+      when: ansible_distribution=="Ubuntu"

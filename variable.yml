@@ -1,0 +1,22 @@
+---
+- name: first play for variable test
+  hosts: host02
+  become: yes
+  become_method: sudo
+  vars:
+    user1: gagandeep
+  tasks: 
+    - name: Creating user {{ user1 }} on all machines
+      user: name={{ user1 }} state=present
+
+- name: Second play for Cloud servers
+  hosts: host02
+  become: yes
+  become_method: sudo
+  vars:
+    user2: deep
+  tasks:
+    - name: creating user {{ user2 }} 
+      user: 
+        name: "{{ user2 }}"
+        state: present

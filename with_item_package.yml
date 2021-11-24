@@ -1,0 +1,13 @@
+---
+- name: play1
+  hosts: host02
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install package 
+      package:
+          name: "{{item}}"
+          state: present
+      loop:
+        - ntp
+        - httpd

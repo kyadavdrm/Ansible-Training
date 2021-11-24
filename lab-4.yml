@@ -1,0 +1,17 @@
+---
+- hosts: host02
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: false
+  tasks:
+     - name: folder creation
+       file: path=/tmp/kiran/kiran3/ state=directory owner=root
+       notify:
+          - file created by kiran
+          - copy file content
+  handlers:
+     - name: file created by kiran
+       file: path=/tmp/kiran/kiran3/test owner=usertest state=touch
+     - name: copy file content
+       file: content="Hello World..!" dest=/tmp/kiran/kiran3/test state=file

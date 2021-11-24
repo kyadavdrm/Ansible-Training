@@ -1,0 +1,26 @@
+---
+- name: Install Java
+  hosts: cloud 
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+  tasks:
+     - name: Pre-requisite for tomcat to ensure sample.war is absent
+       file: path=/opt/tomcat/apache-tomcat-8.5.29/webapps/sample.war state=absent
+     - name: Install jdk
+       yum: name=java-1.8.0-openjdk state=present
+     - name: Install wget on the servers
+       yum: name=wget state=present
+     - name: Create directory for tomcat
+       file: name=/opt/tomcat state=directory
+     - name: Downloading Tomcat Binaries
+       get_url: url=https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.73/bin/apache-tomcat-8.5.73.zip dest=/opt/tomcat
+     - name: Extracting Tomcat
+       shell: cd /opt/tomcat; unzip apache-tomcat-8.5.73.zip; cd apache-tomcat-8.5.73/bin/; chmod 777 startup.sh shutdown.sh catalina.sh
+
+     - name: War deployment
+       shell: cd /opt/tomcat/apache-tomcat-8.5.73/webapps/; wget https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war; cd /opt/tomcat/apache-tomcat-8.5.73/bin; sleep 60
+
+     - name: Starting Tomcat
+       command: /opt/tomcat/apache-tomcat-8.5.73/bin/catalina.sh start

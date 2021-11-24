@@ -1,0 +1,15 @@
+- name: play 1
+  hosts: all
+  strategy: linear
+  serial: 5
+  max_fail_percentage: 10
+  tasks:
+    - name: install ntp
+      package: name=ntp state=installed
+      ignore_errors: true
+      register: ntp_out
+    - name: start ntp service
+      service: name=ntpd state=started
+    - name: print the output
+      debug: var=ntp_out
+      when: ntp_out.rc != 0

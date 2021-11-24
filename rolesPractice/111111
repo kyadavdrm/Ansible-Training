@@ -1,0 +1,7 @@
+---
+# handlers file for ntpconfrole
+
+- name: restart the {{sname}} service
+  service:
+     name: "{{sname}}"
+     state: restarted

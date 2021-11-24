@@ -1,0 +1,21 @@
+---
+- name: Install the packages on different machine
+  hosts: cloud
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  tasks:
+      - name: Install the Centos and Amazon Packages
+        yum:
+           name: "{{item}}"
+           state: installed
+        ignore_errors: yes
+        register: install_out
+        when: ansible_distribution=="Amazon"
+        loop:
+           - ntp
+           - httpd
+           - telnet
+      - name: debug the installation output
+        debug: 
+             var: install_out

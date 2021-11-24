@@ -1,0 +1,7 @@
+---
+- hosts: onprem
+  tasks:
+      - name: Install NTP package
+        yum: name=ntp state=installed
+      - name: create user
+        user: name=user1 state=present

@@ -1,0 +1,11 @@
+---
+- hosts: host02
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: false
+  tasks:
+     - name: create group
+       group: name=grouptest gid=7777
+     - name: Create user
+       user: name=usertest uid=6666 group=grouptest state=present shell=/bin/bash/

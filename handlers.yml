@@ -1,0 +1,18 @@
+---
+- hosts: host02
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: false
+  tasks:
+     - name: install the NTP Service
+       yum: name=ntp state=installed
+     - name: copy ntp.conf file to host02
+       copy: src=/root/ntp.conf dest=/etc/ntp.conf
+       notify: Restart the NTP service
+     - name: Start NTP Service
+       service: name=ntpd state=started
+
+  handlers:
+     - name: Restart the NTP service
+       service: name=ntpd state=restarted

@@ -1,0 +1,17 @@
+---
+# tasks file for ntpconfrole
+
+- name: Install the {{pkg}} package
+  package:
+     name: "{{pkg}}"
+     state: installed
+- name: Start the {{sname}} service
+  service:
+     name: "{{sname}}"
+     state: started
+- name: Copy the ntp.conf file on all server
+  copy:
+     src: ../files/ntp.conf
+     dest: /etc/ntp.conf
+  notify:
+    - restart the {{sname}} service

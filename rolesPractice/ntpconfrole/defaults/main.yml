@@ -1,0 +1,4 @@
+---
+# defaults file for ntpconfrole
+pkg: ntp
+sname: ntpd

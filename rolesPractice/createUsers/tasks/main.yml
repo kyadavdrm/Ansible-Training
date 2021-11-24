@@ -1,0 +1,8 @@
+---
+# tasks file for createUsers
+
+- name: create users on server user name {{user1}}
+  user:
+     name: "{{user1}}"
+     shell: /bin/bash
+     state: present

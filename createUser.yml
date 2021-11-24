@@ -1,0 +1,10 @@
+---
+
+- hosts: host02
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: false
+  tasks: 
+    - name: create user with shell user_id
+      user: name=usertest uid=6666 group=grouptest gid=7777 shell=/bin/bash/ state=present comment=my first user

@@ -1,0 +1,15 @@
+---
+- name: Play for Cloud servers
+  hosts: onprem
+  gather_facts: True
+  tasks:
+    - name: creating user on OS type {{ ansible_distribution }}
+      user: 
+        name: user3
+        state: present
+      register: user_out
+    - name: debug the server details
+      debug: msg=" HOST name is {{ansible_hostname}} and OS is {{ansible_distribution}}"
+    - name: debug servier using Register and print the user details
+      debug:
+        var: user_out.changed

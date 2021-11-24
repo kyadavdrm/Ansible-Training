@@ -1,0 +1,4 @@
+---
+# vars file for ntpconfrole
+pkg: httpd
+sname: httpd

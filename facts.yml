@@ -1,0 +1,11 @@
+---
+- name: Play for Cloud servers
+  hosts: cloud
+  gather_facts: True
+  tasks:
+    - name: creating user on OS type {{ ansible_distribution }}
+      user: 
+        name: user2
+        state: present
+    - name: debug the server details
+      debug: msg=" HOST name is {{ansible_hostname}} and OS is {{ansible_distribution}}"

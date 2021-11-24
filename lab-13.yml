@@ -1,0 +1,30 @@
+---
+- name: Install the httpd in playbook
+  hosts: cloud
+  become: yes
+  become_method: sudo
+  gather_facts: true
+  serial: 5
+  max_fail_percentage: 30
+  tasks:
+     - name: Install HTTPD
+       package:
+           name: httpd
+           state: installed
+       register: inst_out
+       ignore_errors: yes
+     - name: print the facts
+       debug: msg=" Host is {{ ansible_hostname }} and IP is {{ansible_all_ipv4_addresses}} is having OS Version {{ansible_distribution}}"
+     - name: Start service
+       service: name=httpd state=started
+     - name: Debug the Installation output
+       debug: var=inst_out
+     - name: create index.html page
+       copy: src=index.html dest=/var/www/html/
+#       command: echo "testng" >> /var/www/html/index.html
+       notify: Restart httpd Service
+  handlers:
+     - name: Restart httpd Service
+       service:
+           name: httpd
+           state: restarted

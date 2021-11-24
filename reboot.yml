@@ -1,0 +1,15 @@
+---
+- name: reboot system
+  hosts: host02
+  become: yes
+  become_method: sudo
+  tasks:
+     - name: reboot sys
+       reboot:
+          reboot_timeout: 180
+     - name: install package
+       yum: name=ntp state=installed
+     - name: run with the item greater than 5
+       command: echo "{{item}}"
+       loop: [0,2,4,6,8,10]
+       when: item>5

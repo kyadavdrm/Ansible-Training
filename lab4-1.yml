@@ -1,0 +1,24 @@
+---
+- name: first play run on onprem
+  hosts: onprem
+  become: yes
+  become_method: sudo
+  gather_facts: false
+  vars:
+    user1: gagan
+  tasks:
+    - name: create user using variable on onprem
+      user:
+          name: "{{user1}}"
+          state: present
+
+- name: second play run on cloud
+  hosts: cloud
+  vars:
+    user2: gagan2
+  tasks:
+    - name: Create user using varibale on cloud
+      user:
+          name: "{{user2}}"
+          state: present
+
