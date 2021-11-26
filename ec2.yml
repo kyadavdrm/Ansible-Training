@@ -1,0 +1,21 @@
+---
+- name: Creating a play for EC2 instance creation
+  hosts: localhost
+  vars:
+    ami: ami-0108d6a82a783b352
+    subnet: subnet-0214fc1ddc966d8c8
+    sg: kiran-sg
+    key: kiran-ansible-nice-key
+  tasks:
+    - name: Provision an Instance directed by Kiran Yadav
+      ec2:
+        key_name: "{{ key }}"
+        region: ap-south-1
+        instance_type: t2.micro
+        image: "{{ ami }}"
+        wait: yes
+        group: "{{ sg }}"
+        count: 1
+        vpc_subnet_id: "{{ subnet }}"
+        assign_public_ip: yes
+        instance_tags: '{"Name":"Ansible-Kiran-ec2-NICE_DataIQ"}'
